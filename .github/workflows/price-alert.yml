@@ -1,0 +1,41 @@
+name: 股票异动提醒 (Pipeline A)
+
+on:
+  schedule:
+    # 每5分钟一次,UTC 13:00-21:55
+    # 覆盖美股盘前到收盘后,EDT(UTC-4)和EST(UTC-5)两种时段都在范围内
+    - cron: "*/5 13-21 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  check-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 检查价格异动并推送
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          ALERT_THRESHOLD_PCT: "0.5"
+        run: python scripts/price_alert.py
+
+      - name: 保存状态变化
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/alert_state.json
+          git diff --cached --quiet || git commit -m "更新异动提醒状态 [skip ci]"
+          git push
