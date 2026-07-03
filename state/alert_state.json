@@ -1,5 +1,5 @@
 {
-  "date": "2026-07-02",
+  "date": "2026-07-03",
   "tickers": {
     "AAPL": 9,
     "AMZN": 0,
@@ -16,7 +16,7 @@
     "PATH": 2,
     "OKLO": 0,
     "RDDT": -3,
-    "TROO": -27,
+    "TROO": -25,
     "CRWV": -9,
     "SNDK": -28,
     "DRAM": -15,
@@ -30,7 +30,7 @@
     "SATS": 1,
     "AVGO": -4,
     "ADEA": -17,
-    "NOK": -13,
+    "NOK": -12,
     "SPCX": 5,
     "IONQ": -8,
     "PLTR": 5,
@@ -45,7 +45,7 @@
     "GEV": -3,
     "AMD": -8,
     "ASML": -7,
-    "SMCI": -3,
+    "SMCI": -2,
     "APH": -8
   }
 }
